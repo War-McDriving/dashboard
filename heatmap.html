@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5252094e69bbf9166169e85e0f364db2 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_5252094e69bbf9166169e85e0f364db2" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_5252094e69bbf9166169e85e0f364db2 = L.map(
+                "map_5252094e69bbf9166169e85e0f364db2",
+                {
+                    center: [51.219242857142866, 4.402285714285714],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 15,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_323e6b0bbd3f28cf7c900f9ee532d9c1 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_323e6b0bbd3f28cf7c900f9ee532d9c1.addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var heat_map_cebe3362923c96397357cc70f9abd36a = L.heatLayer(
+                [[51.2194, 4.4025, 70], [51.2194, 4.4025, 68], [51.2194, 4.4025, 65], [51.22, 4.403, 60], [51.218, 4.401, 75], [51.221, 4.404, 55], [51.2175, 4.4005, 80]],
+                {"blur": 10, "maxZoom": 18, "minOpacity": 0.5, "radius": 15}
+            );
+        
+    
+            heat_map_cebe3362923c96397357cc70f9abd36a.addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var marker_e7832f32f1108d6b49b22bab714e3042 = L.marker(
+                [51.2194, 4.4025],
+                {}
+            ).addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var icon_ac8b04b398297306639ab432453f35a7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_e7832f32f1108d6b49b22bab714e3042.setIcon(icon_ac8b04b398297306639ab432453f35a7);
+        
+    
+        var popup_c69396bb2e2f580b1c276f5c08f394b9 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_bf4b1254d88aab01e172299cf72f11fd = $(`<div id="html_bf4b1254d88aab01e172299cf72f11fd" style="width: 100.0%; height: 100.0%;">Address: 31-32, Groenplaats, Historisch Centrum, Antwerp, Flanders, 2000, Belgium<br>Signal Strength: -70 dBm</div>`)[0];
+                popup_c69396bb2e2f580b1c276f5c08f394b9.setContent(html_bf4b1254d88aab01e172299cf72f11fd);
+            
+        
+
+        marker_e7832f32f1108d6b49b22bab714e3042.bindPopup(popup_c69396bb2e2f580b1c276f5c08f394b9)
+        ;
+
+        
+    
+    
+            var marker_688530eba562e897200c2ca1f5e1004c = L.marker(
+                [51.2194, 4.4025],
+                {}
+            ).addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var icon_0de9a3039991a328d02470bddd951bf3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_688530eba562e897200c2ca1f5e1004c.setIcon(icon_0de9a3039991a328d02470bddd951bf3);
+        
+    
+        var popup_5f2a204ca7c87817292d4f14c1e3fb21 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b27f7d58cab786651052639f8ddb8648 = $(`<div id="html_b27f7d58cab786651052639f8ddb8648" style="width: 100.0%; height: 100.0%;">Address: 31-32, Groenplaats, Historisch Centrum, Antwerp, Flanders, 2000, Belgium<br>Signal Strength: -68 dBm</div>`)[0];
+                popup_5f2a204ca7c87817292d4f14c1e3fb21.setContent(html_b27f7d58cab786651052639f8ddb8648);
+            
+        
+
+        marker_688530eba562e897200c2ca1f5e1004c.bindPopup(popup_5f2a204ca7c87817292d4f14c1e3fb21)
+        ;
+
+        
+    
+    
+            var marker_3a6cf5c5f2d14985d5fddae2a999d3e1 = L.marker(
+                [51.2194, 4.4025],
+                {}
+            ).addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var icon_29d310fa775c9436c4333c6a186b8225 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_3a6cf5c5f2d14985d5fddae2a999d3e1.setIcon(icon_29d310fa775c9436c4333c6a186b8225);
+        
+    
+        var popup_567ea8bdb1f3acda458cb9e6aeb3a502 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1acd8bbd0a2c030116020f18fcee86f9 = $(`<div id="html_1acd8bbd0a2c030116020f18fcee86f9" style="width: 100.0%; height: 100.0%;">Address: 31-32, Groenplaats, Historisch Centrum, Antwerp, Flanders, 2000, Belgium<br>Signal Strength: -65 dBm</div>`)[0];
+                popup_567ea8bdb1f3acda458cb9e6aeb3a502.setContent(html_1acd8bbd0a2c030116020f18fcee86f9);
+            
+        
+
+        marker_3a6cf5c5f2d14985d5fddae2a999d3e1.bindPopup(popup_567ea8bdb1f3acda458cb9e6aeb3a502)
+        ;
+
+        
+    
+    
+            var marker_857806ce23b7fc144c293b0a70a5f50d = L.marker(
+                [51.22, 4.403],
+                {}
+            ).addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var icon_20876e1b4f3fc85051c899d07f42eca8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_857806ce23b7fc144c293b0a70a5f50d.setIcon(icon_20876e1b4f3fc85051c899d07f42eca8);
+        
+    
+        var popup_2551469ff2260a51a9f765e592c8dcaf = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_75830dfcfa151990abb726a3b3f01cdd = $(`<div id="html_75830dfcfa151990abb726a3b3f01cdd" style="width: 100.0%; height: 100.0%;">Address: 31, Melkmarkt, Historisch Centrum, Antwerp, Flanders, 2000, Belgium<br>Signal Strength: -60 dBm</div>`)[0];
+                popup_2551469ff2260a51a9f765e592c8dcaf.setContent(html_75830dfcfa151990abb726a3b3f01cdd);
+            
+        
+
+        marker_857806ce23b7fc144c293b0a70a5f50d.bindPopup(popup_2551469ff2260a51a9f765e592c8dcaf)
+        ;
+
+        
+    
+    
+            var marker_d44c5cdff2e426dabc64734aaacb43a5 = L.marker(
+                [51.218, 4.401],
+                {}
+            ).addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var icon_340d7ee0aa38256dfc98f3207209eca8 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_d44c5cdff2e426dabc64734aaacb43a5.setIcon(icon_340d7ee0aa38256dfc98f3207209eca8);
+        
+    
+        var popup_fc6cf77c9f8113cf14d2a1cb1a37bc7c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c1d796cd9b887d31c6b274ab3bea9d2b = $(`<div id="html_c1d796cd9b887d31c6b274ab3bea9d2b" style="width: 100.0%; height: 100.0%;">Address: KdG Campus Groenplaats, 5,5A,5B, Nationalestraat, Historisch Centrum, Antwerp, Flanders, 2000, Belgium<br>Signal Strength: -75 dBm</div>`)[0];
+                popup_fc6cf77c9f8113cf14d2a1cb1a37bc7c.setContent(html_c1d796cd9b887d31c6b274ab3bea9d2b);
+            
+        
+
+        marker_d44c5cdff2e426dabc64734aaacb43a5.bindPopup(popup_fc6cf77c9f8113cf14d2a1cb1a37bc7c)
+        ;
+
+        
+    
+    
+            var marker_bbfe5995d861a26805720e412de4afa0 = L.marker(
+                [51.221, 4.404],
+                {}
+            ).addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var icon_5e6b9ac56901cd752be25f0dc798b9c1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_bbfe5995d861a26805720e412de4afa0.setIcon(icon_5e6b9ac56901cd752be25f0dc798b9c1);
+        
+    
+        var popup_ab0a1b8b5e6e786c2083241ad47a785e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_4d3d6847edd22c071a0886ce227ce505 = $(`<div id="html_4d3d6847edd22c071a0886ce227ce505" style="width: 100.0%; height: 100.0%;">Address: Erfgoedbibliotheek Hendrik Conscience, 4, Hendrik Conscienceplein, Historisch Centrum, Antwerp, Flanders, 2000, Belgium<br>Signal Strength: -55 dBm</div>`)[0];
+                popup_ab0a1b8b5e6e786c2083241ad47a785e.setContent(html_4d3d6847edd22c071a0886ce227ce505);
+            
+        
+
+        marker_bbfe5995d861a26805720e412de4afa0.bindPopup(popup_ab0a1b8b5e6e786c2083241ad47a785e)
+        ;
+
+        
+    
+    
+            var marker_c38cad944184efaa692f5063955ada2c = L.marker(
+                [51.2175, 4.4005],
+                {}
+            ).addTo(map_5252094e69bbf9166169e85e0f364db2);
+        
+    
+            var icon_dc38dc4779387278c13b0634fbf706ee = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_c38cad944184efaa692f5063955ada2c.setIcon(icon_dc38dc4779387278c13b0634fbf706ee);
+        
+    
+        var popup_d527a84c7ee6464f204de9fba238b422 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_87d863f8d811d3ea1270b0d6c5a3cc75 = $(`<div id="html_87d863f8d811d3ea1270b0d6c5a3cc75" style="width: 100.0%; height: 100.0%;">Address: 25-27, Kammenstraat, Meir, Antwerp, Flanders, 2000, Belgium<br>Signal Strength: -80 dBm</div>`)[0];
+                popup_d527a84c7ee6464f204de9fba238b422.setContent(html_87d863f8d811d3ea1270b0d6c5a3cc75);
+            
+        
+
+        marker_c38cad944184efaa692f5063955ada2c.bindPopup(popup_d527a84c7ee6464f204de9fba238b422)
+        ;
+
+        
+    
+</script>
+</html>

@@ -81,9 +81,9 @@ def index():
 def contact():
     return render_template("contact.html")
 
-@app.route("/marker")
+@app.route("/analytics")
 def marker():
-    return render_template("myMap.html")
+    return render_template("analytics.html")
 
 
 if __name__ == "__main__":

@@ -85,6 +85,10 @@ def contact():
 def marker():
     return render_template("analytics.html")
 
+@app.route("/wep")
+def wep():
+    return render_template("wep.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

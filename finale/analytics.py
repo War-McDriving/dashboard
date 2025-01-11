@@ -30,10 +30,6 @@ auth_mode_usage.columns = ['Auth Mode', 'Count']
 wifi_gen_usage = data['Wi-Fi Generation'].value_counts().reset_index()
 wifi_gen_usage.columns = ['Wi-Fi Generation', 'Count']
 
-# 3. Top SSIDs by Network Count
-ssid_count = data['SSID'].value_counts().reset_index()
-ssid_count.columns = ['SSID', 'Count']
-
 # Signal Strength Distribution
 rssi_distribution = data['RSSI'].value_counts().reset_index()
 rssi_distribution.columns = ['RSSI', 'Count']
@@ -51,12 +47,6 @@ fig_wifi_gen = px.bar(wifi_gen_usage, x='Wi-Fi Generation', y='Count', title="Wi
                        labels={"Wi-Fi Generation": "Wi-Fi Generation", "Count": "Number of Networks"},
                        template="plotly_white", color='Wi-Fi Generation', color_discrete_sequence=px.colors.qualitative.Set3)
 fig_wifi_gen.update_layout(bargap=0.2)
-
-# Plotting the Top 20 SSIDs by Count
-fig_ssid_count = px.bar(ssid_count.head(20), x='SSID', y='Count', title="Top 20 SSIDs by Count",
-                        labels={"SSID": "Network SSID", "Count": "Frequency of Occurrence"},
-                        template="plotly_white", color='SSID', color_discrete_sequence=px.colors.qualitative.Pastel)
-fig_ssid_count.update_layout(bargap=0.2)
 
 # Plotting the Signal Strength Distribution
 fig_rssi_distribution = px.histogram(data, x='RSSI', nbins=50, title="Signal Strength Distribution",
@@ -212,6 +202,7 @@ html_content = f"""
             </div>
         </a>
         <a href="/analytics" class="navButton">Analytics</a>
+        <a href="/wep" class="navButton">WEP</a>
         <a href="/contact" class="navButton">Contact</a>
     </nav>
 
@@ -225,11 +216,6 @@ html_content = f"""
     <div class="chart-container">
         <h2>Wi-Fi Generation Distribution</h2>
         {fig_wifi_gen.to_html(full_html=False, include_plotlyjs=False)}
-    </div>
-
-    <div class="chart-container">
-        <h2>Top 20 SSIDs by Count</h2>
-        {fig_ssid_count.to_html(full_html=False, include_plotlyjs=False)}
     </div>
 
     <div class="chart-container">

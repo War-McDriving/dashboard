@@ -1,5 +1,6 @@
 import pandas as pd
 import folium
+from folium.plugins import HeatMap
 
 # Load data from the provided sample (adjust path if necessary)
 data = pd.read_csv("../data/full.wiglecsv")
@@ -15,9 +16,15 @@ if not wep_networks.empty:
     # The first column contains MAC addresses, so use that as the BSSID
     bssid_column = data.columns[0]  # Assumes the first column is the MAC address (BSSID)
 
+    # Create a heatmap of WEP networks
+    heatmap_data = wep_networks[['CurrentLatitude', 'CurrentLongitude']].dropna()
+
     # Create a Folium map centered around the average location of WEP networks
-    map_center = [wep_networks['CurrentLatitude'].mean(), wep_networks['CurrentLongitude'].mean()]
+    map_center = [heatmap_data['CurrentLatitude'].mean(), heatmap_data['CurrentLongitude'].mean()]
     wep_map = folium.Map(location=map_center, zoom_start=13)
+
+    # Add heatmap layer
+    HeatMap(heatmap_data.values.tolist()).add_to(wep_map)
 
     # Add pinpoints (markers) for each WEP network
     for _, row in wep_networks.iterrows():
@@ -169,7 +176,7 @@ if not wep_networks.empty:
         <h1>WEP Networks Map and SSID Table</h1>
         <div class="container">
             <div id="map">
-                {wep_map._repr_html_()}  <!-- Embed the Folium map directly -->
+                {wep_map._repr_html_()}  <!-- Embed the Folium map with heatmap -->
             </div>
             <div class="table-container">
                 {table_html}
@@ -183,6 +190,6 @@ if not wep_networks.empty:
     with open('./templates/wep.html', 'w') as f:
         f.write(html_content)
 
-    print("WEP Network Map with pinpoints and SSID table generated: wep.html")
+    print("WEP Network Map with heatmap and SSID table generated: wep.html")
 else:
     print("No WEP networks found.")

@@ -6,44 +6,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WiFi Heatmap</title>
     <style>
-        body,
-        html {
+        /* General Styles */
+        body, html {
             margin: 0;
             padding: 0;
-            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f3f5;
             height: 100%;
         }
 
+        h1, h2 {
+            color: #343a40;
+        }
+
+        /* Table Styles */
         table {
             border-collapse: collapse;
             width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
-
-        th,
-        td {
-            padding: 8px;
+        th, td {
+            padding: 4px 8px; /* Further reduced padding */
             text-align: left;
+            border: 1px solid #ddd;
         }
 
+        th {
+            background-color: #5a6268;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        td {
+            background-color: #f8f9fa;
+        }
+
+        /* Hover Effects for Table Rows */
+        tr:hover td {
+            background-color: #e9ecef;
+        }
+
+        /* Scrollable Table */
         .scrollable-table {
             max-height: 400px;
             overflow-y: auto;
             display: block;
+            margin-top: 20px;
         }
 
+        /* Search Bar */
         .search-container {
-            margin: 20px 0;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
         }
 
+        .search-container label {
+            font-size: 14px;
+            margin-right: 10px;
+            color: #495057;
+        }
+
+        .search-container input {
+            padding: 6px 10px; /* Further reduced padding */
+            font-size: 12px; /* Reduced font size */
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            width: 150px; /* Further reduced width */
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus {
+            border-color: #0056b3;
+            outline: none;
+        }
+
+        /* Map Container */
+        .map-container {
+            margin-bottom: 30px;
+        }
+
+        /* Navigation Styles */
         nav {
-            background-color: #333;
+            background-color: #343a40;
             overflow: hidden;
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
         }
 
         nav .logo {
@@ -56,14 +113,14 @@
             vertical-align: middle;
         }
 
-        nav .logo:active{
+        nav .logo:active {
             opacity: 0.7;
-            transform: scale(0.95); /* Slightly shrink the logo on click */
+            transform: scale(0.95);
         }
 
         nav .logo img:hover {
-            cursor:pointer;
-            transform: scale(1.05); /* Slightly enlarge the logo on hover */
+            cursor: pointer;
+            transform: scale(1.05);
         }
 
         .navButton {
@@ -71,19 +128,91 @@
             display: block;
             color: white;
             text-align: center;
-            padding: 14px 16px;
+            padding: 14px 20px;
             text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
         }
 
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
+        .navButton:hover {
+            background-color: #495057;
+            color: #ffffff;
         }
 
-        .map-container {
-            margin-bottom: 20px;
+        .content {
+            margin-top: 80px;
+            padding: 0 20px;
         }
+
+        .content h1, .content h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
     </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/">
+            <div class="logo">
+                <img src="../static/warmcdriving-logo.png" alt="WiFi Heatmap Logo">
+            </div>
+        </a>
+        <a href="/analytics" class="navButton">Analytics</a>
+        <a href="/wep" class="navButton">WEP</a>
+        <a href="/contact" class="navButton">Contact</a>
+    </nav>
+
+    <div class="content">
+        <h1>WiFi Heatmap</h1>
+        <div class="map-container">
+            <!-- Include de kaart direct -->
+            {% include 'heatmap.html' %}
+        </div>
+        <div class="search-container">
+            <label for="searchInput">Search:</label>
+            <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search in table...">
+        </div>
+        <h2>Data Table</h2>
+        <div class="scrollable-table">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>MAC</th>
+                        <th>SSID</th>
+                        <th>AuthMode</th>
+                        <th>FirstSeen</th>
+                        <th>Channel</th>
+                        <th>RSSI</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Altitude</th>
+                        <th>Accuracy</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row['MAC'] }}</td>
+                        <td>{{ row['SSID'] }}</td>
+                        <td>{{ row['AuthMode'] }}</td>
+                        <td>{{ row['FirstSeen'] }}</td>
+                        <td>{{ row['Channel'] }}</td>
+                        <td>{{ row['RSSI'] }}</td>
+                        <td>{{ row['CurrentLatitude'] }}</td>
+                        <td>{{ row['CurrentLongitude'] }}</td>
+                        <td>{{ row['AltitudeMeters'] }}</td>
+                        <td>{{ row['AccuracyMeters'] }}</td>
+                        <td>{{ row['Type'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
         function searchTable() {
             const input = document.getElementById('searchInput');
@@ -104,65 +233,6 @@
             }
         }
     </script>
-</head>
-
-<body>
-    <nav>
-        <a href="/">
-            <div class="logo">
-                <img src="../static/warmcdriving-logo.png" alt="WiFi Heatmap Logo">
-            </div>
-        </a>
-        <a href="/analytics" class="navButton">Analytics</a>
-        <a href="/wep" class="navButton">WEP</a>
-        <a href="/contact" class="navButton">Contact</a>
-    </nav>
-    <h1>WiFi Heatmap</h1>
-    <div class="map-container">
-        <!-- Include de kaart direct -->
-        {% include 'heatmap.html' %}
-    </div>
-    <div class="search-container">
-        <label for="searchInput">Search:</label>
-        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search in table...">
-    </div>
-    <h2>Data Table</h2>
-    <div class="scrollable-table">
-        <table id="dataTable">
-            <thead>
-                <tr>
-                    <th>MAC</th>
-                    <th>SSID</th>
-                    <th>AuthMode</th>
-                    <th>FirstSeen</th>
-                    <th>Channel</th>
-                    <th>RSSI</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Altitude</th>
-                    <th>Accuracy</th>
-                    <th>Type</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in data %}
-                <tr>
-                    <td>{{ row['MAC'] }}</td>
-                    <td>{{ row['SSID'] }}</td>
-                    <td>{{ row['AuthMode'] }}</td>
-                    <td>{{ row['FirstSeen'] }}</td>
-                    <td>{{ row['Channel'] }}</td>
-                    <td>{{ row['RSSI'] }}</td>
-                    <td>{{ row['CurrentLatitude'] }}</td>
-                    <td>{{ row['CurrentLongitude'] }}</td>
-                    <td>{{ row['AltitudeMeters'] }}</td>
-                    <td>{{ row['AccuracyMeters'] }}</td>
-                    <td>{{ row['Type'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
 </body>
 
 </html>

@@ -44,7 +44,7 @@ def create_heatmap(file_path):
     if not grouped_data.empty:
         map_center = [data["CurrentLatitude"].mean(), data["CurrentLongitude"].mean()]
         wifi_map = folium.Map(
-            location=map_center, zoom_start=15, width="100%", height="400px"
+            location=map_center, zoom_start=15, width="100%", height="500px"
         )
 
         # Voeg HeatMap toe

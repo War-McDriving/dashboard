@@ -66,7 +66,7 @@ def create_heatmap(file_path):
 @app.route("/")
 def index():
     # CSV-bestandspad
-    csv_file = "../data/stadmcdo-20250103-11-17-26-1.wiglecsv"  # Pas aan naar het juiste bestandspad
+    csv_file = "../data/full.wiglecsv"  # Pas aan naar het juiste bestandspad
 
     try:
         # Creëer heatmap en verkrijg gegroepeerde data

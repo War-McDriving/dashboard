@@ -5,7 +5,6 @@ from folium.plugins import HeatMap
 
 app = Flask(__name__)
 
-
 def create_heatmap(file_path):
     # Lees en filter relevante kolommen in één stap
     try:
@@ -81,6 +80,10 @@ def index():
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
+
+@app.route("/marker")
+def marker():
+    return render_template("myMap.html")
 
 
 if __name__ == "__main__":

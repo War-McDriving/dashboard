@@ -34,6 +34,14 @@ wifi_gen_usage.columns = ['Wi-Fi Generation', 'Count']
 ssid_count = data['SSID'].value_counts().reset_index()
 ssid_count.columns = ['SSID', 'Count']
 
+# Signal Strength Distribution
+rssi_distribution = data['RSSI'].value_counts().reset_index()
+rssi_distribution.columns = ['RSSI', 'Count']
+
+# Channel Distribution
+channel_distribution = data['Channel'].value_counts().reset_index()
+channel_distribution.columns = ['Channel', 'Count']
+
 # Plotting the Authentication Mode Usage as a Pie Chart
 fig_auth_mode = px.pie(auth_mode_usage, names='Auth Mode', values='Count', title="Authentication Mode Distribution",
                        template="plotly_white", color='Auth Mode', color_discrete_sequence=px.colors.qualitative.Set2)
@@ -49,6 +57,17 @@ fig_ssid_count = px.bar(ssid_count.head(20), x='SSID', y='Count', title="Top 20 
                         labels={"SSID": "Network SSID", "Count": "Frequency of Occurrence"},
                         template="plotly_white", color='SSID', color_discrete_sequence=px.colors.qualitative.Pastel)
 fig_ssid_count.update_layout(bargap=0.2)
+
+# Plotting the Signal Strength Distribution
+fig_rssi_distribution = px.histogram(data, x='RSSI', nbins=50, title="Signal Strength Distribution",
+                                     labels={"RSSI": "Signal Strength (dBm)", "Count": "Number of Networks"},
+                                     template="plotly_white", color_discrete_sequence=['#4a90e2'])
+
+# Plotting the Channel Distribution
+fig_channel_distribution = px.bar(channel_distribution, x='Channel', y='Count', title="Channel Distribution",
+                                  labels={"Channel": "Wi-Fi Channel", "Count": "Number of Networks"},
+                                  template="plotly_white", color='Channel', color_discrete_sequence=px.colors.qualitative.Vivid)
+fig_channel_distribution.update_layout(bargap=0.2)
 
 # Generate HTML content with better styles
 html_content = f"""
@@ -211,6 +230,16 @@ html_content = f"""
     <div class="chart-container">
         <h2>Top 20 SSIDs by Count</h2>
         {fig_ssid_count.to_html(full_html=False, include_plotlyjs=False)}
+    </div>
+
+    <div class="chart-container">
+        <h2>Signal Strength Distribution</h2>
+        {fig_rssi_distribution.to_html(full_html=False, include_plotlyjs=False)}
+    </div>
+
+    <div class="chart-container">
+        <h2>Channel Distribution</h2>
+        {fig_channel_distribution.to_html(full_html=False, include_plotlyjs=False)}
     </div>
 
     <div class="footer">

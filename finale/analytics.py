@@ -7,14 +7,30 @@ data = pd.read_csv("../data/full.wiglecsv")
 # Clean data if necessary (e.g., drop rows with missing 'AuthMode' or 'RSSI')
 data = data.dropna(subset=['AuthMode', 'RSSI'])
 
+# Add Wi-Fi Generation based on Channel
+def get_wifi_generation(channel):
+    if 36 <= channel <= 165:
+        return "Wi-Fi 5 (802.11ac)"
+    elif 1 <= channel <= 233:
+        if channel <= 64:
+            return "Wi-Fi 6 (802.11ax)"
+        else:
+            return "Wi-Fi 7 (802.11be)"  # Assuming Wi-Fi 7 uses the higher channels, you could adjust based on more precise details
+    else:
+        return "Unknown"
+
+# Apply the function to create a new column for Wi-Fi generation
+data['Wi-Fi Generation'] = data['Channel'].apply(get_wifi_generation)
+
 # 1. Authentication Mode (WPA Security) Distribution
 auth_mode_usage = data['AuthMode'].value_counts().reset_index()
 auth_mode_usage.columns = ['Auth Mode', 'Count']
 
-# 2. Signal Strength (RSSI) by Channel
-rssi_by_channel = data.groupby('Channel')['RSSI'].describe()
+# 2. Wi-Fi Generation Distribution
+wifi_gen_usage = data['Wi-Fi Generation'].value_counts().reset_index()
+wifi_gen_usage.columns = ['Wi-Fi Generation', 'Count']
 
-# 4. Top SSIDs by Network Count
+# 3. Top SSIDs by Network Count
 ssid_count = data['SSID'].value_counts().reset_index()
 ssid_count.columns = ['SSID', 'Count']
 
@@ -24,11 +40,11 @@ fig_auth_mode = px.bar(auth_mode_usage, x='Auth Mode', y='Count', title="Authent
                        template="plotly_white")
 fig_auth_mode.update_layout(bargap=0.2)
 
-# Plotting Signal Strength (RSSI) by Channel
-fig_rssi_channel = px.box(data, x="Channel", y="RSSI", title="Signal Strength (RSSI) by Channel",
-                          labels={"Channel": "Channel", "RSSI": "Signal Strength (RSSI)"},
-                          template="plotly_white")
-fig_rssi_channel.update_layout(bargap=0.2)
+# Plotting the Wi-Fi Generation Usage
+fig_wifi_gen = px.bar(wifi_gen_usage, x='Wi-Fi Generation', y='Count', title="Wi-Fi Generation Distribution",
+                       labels={"Wi-Fi Generation": "Wi-Fi Generation", "Count": "Number of Networks"},
+                       template="plotly_white")
+fig_wifi_gen.update_layout(bargap=0.2)
 
 # Plotting the Top 20 SSIDs by Count
 fig_ssid_count = px.bar(ssid_count.head(20), x='SSID', y='Count', title="Top 20 SSIDs by Count",
@@ -85,9 +101,47 @@ html_content = f"""
             color: #4a90e2;
             text-decoration: none;
         }}
+        nav {{
+            background-color: #333;
+            overflow: hidden;
+        }}
+        nav .logo {{
+            float: left;
+            padding: 8px 16px;
+        }}
+        nav .logo img {{
+            height: 40px;
+            vertical-align: middle;
+        }}
+        nav .logo:active {{
+            opacity: 0.7;
+            transform: scale(0.95); /* Slightly shrink the logo on click */
+        }}
+        nav .logo img:hover {{
+            cursor: pointer;
+            transform: scale(1.05); /* Slightly enlarge the logo on hover */
+        }}
+        .navButton {{
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }}
     </style>
 </head>
 <body>
+    <nav>
+        <a href="/">
+            <div class="logo">
+                <img src="../static/warmcdriving-logo.png" alt="WiFi Heatmap Logo">
+            </div>
+        </a>
+        <a href="/analytics" class="navButton">Analytics</a>
+        <a href="/contact" class="navButton">Contact</a>
+    </nav>
+
     <h1>Wi-Fi Network Analysis</h1>
 
     <div class="chart-container">
@@ -96,8 +150,8 @@ html_content = f"""
     </div>
 
     <div class="chart-container">
-        <h2>Signal Strength (RSSI) by Channel</h2>
-        {fig_rssi_channel.to_html(full_html=False, include_plotlyjs=False)}
+        <h2>Wi-Fi Generation Distribution</h2>
+        {fig_wifi_gen.to_html(full_html=False, include_plotlyjs=False)}
     </div>
 
     <div class="chart-container">
@@ -112,8 +166,8 @@ html_content = f"""
 </html>
 """
 
-# Write HTML content to a file
+# Write the updated HTML content to a file
 with open("./templates/analytics.html", "w") as f:
     f.write(html_content)
 
-print("Wi-Fi Network Analysis HTML page generated: wi_fi_analysis.html")
+print("Wi-Fi Network Analysis HTML page updated: wi_fi_analysis.html")
